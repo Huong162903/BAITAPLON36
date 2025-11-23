@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vật Phẩm Khác - An Lạc Phong Thủy</title>
+    <style>
+        /* [DÁN TOÀN BỘ CSS TỪ products-list.html VÀO ĐÂY] */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #F8F4E3; 
+            color: #4B3832; 
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        h2, h3 {
+            color: #8B4513; 
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* --- HEADER và NAVBAR (Dùng lại style gốc) --- */
+        .header {
+            background-color: #654321;
+            color: #FFD700;
+            padding: 10px 0;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            font-size: 1.5em; 
+            margin-right: 5px;
+            color: #FFD700;
+        }
+
+        .logo-text {
+            color: #F8F4E3;
+        }
+
+        .navbar a {
+            color: #F8F4E3;
+            text-decoration: none;
+            margin-left: 20px;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #8B4513;
+            border-radius: 4px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-actions a {
+            color: #FFD700; 
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            margin-left: 15px;
+            padding: 5px 10px;
+            border: 1px solid #FFD700;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .user-actions a:hover {
+            color: #654321;
+            background-color: #FFD700;
+        }
+        
+        /* Nút chính (Dùng lại style gốc) */
+        .btn-main {
+            display: inline-block;
+            background-color: #FFD700; 
+            color: #654321; 
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-main:hover {
+            background-color: #FFC000;
+        }
+
+        /* --- SẢN PHẨM LISTING PAGE STYLE MỚI --- */
+
+        .product-listing-section {
+            padding: 40px 0;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+        }
+
+        /* Sidebar - Thanh Danh mục */
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0; 
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            height: fit-content; 
+            border: 1px solid #D2B48C;
+        }
+
+        .sidebar h4 {
+            color: #8B4513;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #D2B48C;
+            padding-bottom: 10px;
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            margin-bottom: 10px;
+        }
+
+        .category-list a {
+            display: block;
+            text-decoration: none;
+            color: #4B3832;
+            padding: 10px 0;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+        .category-list a:hover,
+        .category-list a.active {
+            background-color: #F0EAD6; 
+            color: #A0522D; 
+            border-left: 3px solid #A0522D;
+            padding-left: 10px;
+        }
+
+        /* Main Content - Lưới Sản Phẩm */
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .listing-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sort-dropdown label {
+            color: #654321;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .sort-dropdown select {
+            padding: 8px;
+            border: 1px solid #D2B48C;
+            border-radius: 4px;
+            background-color: white;
+            color: #4B3832;
+        }
+
+        /* Product Grid (Dùng lại style gốc) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #D2B48C;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .product-card h4 {
+            color: #654321;
+            margin-bottom: 10px; 
+            text-align: center; 
+        }
+
+        .price {
+            color: #A0522D;
+            font-weight: bold;
+            margin: 5px 0 10px;
+        }
+
+        .btn-add-to-cart {
+            background-color: #8B4513;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #654321;
+        }
+
+        .btn-detail {
+            display: block;
+            background-color: #D2B48C;
+            color: #4B3832;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-detail:hover {
+            background-color: #8B4513;
+            color: white;
+        }
+
+        /* --- FOOTER (Dùng lại style gốc) --- */
+        .footer {
+            background-color: #4B3832;
+            color: #F8F4E3;
+            padding: 30px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            text-align: left;
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li a {
+            color: #F8F4E3;
+            text-decoration: none;
+            line-height: 2;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #FFD700;
+        }
+
+        .social-icons a {
+            color: #F8F4E3;
+            font-size: 1em;
+            margin-right: 10px;
+            padding: 5px 8px;
+            text-decoration: none;
+            border: 1px solid #F8F4E3;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #4B3832;
+            background-color: #FFD700;
+            border-color: #FFD700;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #654321;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.8em;
+        }
+        
+        /* --- Responsive --- */
+        @media (max-width: 992px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .navbar, .user-actions {
+                margin-top: 10px;
+            }
+            .product-grid {
+                grid-template-columns: 1fr; 
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-col h4 {
+                text-align: center;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <span class="logo-icon">☯</span> 
+            <span class="logo-text">An Lạc Phong Thủy</span>
+        </div>
+        <nav class="navbar">
+            <a href="index.html">Trang Chủ</a>
+            <a href="products-list.html" style="background-color: #8B4513; border-radius: 4px;">Sản Phẩm</a>
+            <a href="index.html#about">Giới Thiệu</a>
+            <a href="#contact">Liên Hệ</a>
+        </nav>
+        <div class="user-actions">
+            <a href="cart.html" title="Giỏ Hàng">Giỏ Hàng</a> 
+            <a href="index.html#open-login-modal" title="Tài Khoản">Đăng Nhập</a> 
+        </div>
+    </div>
+</header>
+
+<section class="product-listing-section">
+    <div class="container">
+        <h2>Danh Mục: Vật Phẩm Khác</h2>
+
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h4>Danh Mục Vật Phẩm</h4>
+                <ul class="category-list">
+                    <li><a href="products-list.html">Tất Cả Sản Phẩm</a></li>
+                    <li><a href="vong-tay-phong-thuy.html">Vòng Tay Phong Thủy</a></li>
+                    <li><a href="da-quy-thach-anh.html">Đá Quý & Thạch Anh</a></li>
+                    <li><a href="tuong-linh-vat.html">Tượng & Linh Vật</a></li>
+                    <li><a href="tin-tuc-phong-thuy.html" class="active">Tin Tức Phong Thủy</a></li>
+                </ul>
+            </aside>
+
+            <div class="main-content">
+                <div class="listing-controls">
+                    <p>Hiển thị 1-2 trong 2 sản phẩm</p>
+                    <div class="sort-dropdown">
+                        <label for="sort-by">Sắp xếp theo:</label>
+                        <select id="sort-by" name="sort-by" onchange="sortProducts()">
+                            <option value="default">Mặc định</option>
+                            <option value="price-asc">Giá: Thấp đến Cao</option>
+                            <option value="price-desc">Giá: Cao đến Thấp</option>
+                            <option value="name-asc">Tên: A-Z</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-grid" id="product-grid">
+                    <div class="product-card" data-name="Thoi Vang Phong Thuy" data-price="320000">
+                        <img src="placeholder-4.jpg" alt="Thỏi Vàng" class="product-img">
+                        <h4>Thỏi Vàng Phong Thủy</h4>
+                        <p class="price">320.000 VNĐ</p>
+                        <button class="btn-add-to-cart">Thêm vào Giỏ</button>
+                        <a href="product-detail.html?id=thoi-vang-phong-thuy" class="btn-detail">Xem Chi Tiết</a>
+                    </div>
+                    <div class="product-card" data-name="Gay Nhu Y Bang Ngoc" data-price="2500000">
+                        <img src="placeholder-5.jpg" alt="Gậy Như Ý" class="product-img">
+                        <h4>Gậy Như Ý Bằng Ngọc</h4>
+                        <p class="price">2.500.000 VNĐ</p>
+                        <button class="btn-add-to-cart">Thêm vào Giỏ</button>
+                        <a href="product-detail.html?id=gay-nhu-y-ngoc" class="btn-detail">Xem Chi Tiết</a>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <span style="margin: 0 15px; font-weight: bold; color: #A0522D;">1</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="contact" class="footer">
+    <div class="container footer-grid">
+        <div class="footer-col contact-info">
+            <h4>Liên Hệ Chúng Tôi</h4>
+            <p><strong>Hotline:</strong> 0987 654 321</p>
+            <p><strong>Email:</strong> anlacphongthuy@email.com</p>
+            <p><strong>Địa chỉ:</strong> Số X, Đường Y, Quận Z, TP. HCM</p>
+            <p>Giờ làm việc: 9:00 - 18:00 (T2 - T7)</p>
+        </div>
+
+        <div class="footer-col nav-links">
+            <h4>Danh Mục</h4>
+            <ul>
+                <li><a href="vong-tay-phong-thuy.html">Vòng Tay Phong Thủy</a></li>
+                <li><a href="da-quy-thach-anh.html">Đá Quý & Thạch Anh</a></li>
+                <li><a href="tuong-linh-vat.html">Tượng & Linh Vật</a></li>
+                <li><a href="tin-tuc-phong-thuy.html">Tin Tức Phong Thủy</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col policies">
+            <h4>Chính Sách</h4>
+            <ul>
+                <li><a href="#">Chính sách Đổi trả</a></li>
+                <li><a href="#">Chính sách Bảo mật</a></li>
+                <li><a href="#">Hướng dẫn Thanh toán</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 An Lạc Phong Thủy. Bảo lưu mọi quyền.</p>
+    </div>
+</footer>
+
+<script>
+    function sortProducts() {
+        // 1. Lay container va cac product cards
+        const grid = document.getElementById('product-grid');
+        let products = Array.from(grid.querySelectorAll('.product-card'));
+        const sortBy = document.getElementById('sort-by').value;
+
+        // 2. Dinh nghia ham so sanh
+        products.sort((a, b) => {
+            if (sortBy === 'price-asc') {
+                // Sap xep theo gia: Thap den Cao
+                const priceA = parseInt(a.getAttribute('data-price'));
+                const priceB = parseInt(b.getAttribute('data-price'));
+                return priceA - priceB;
+            } else if (sortBy === 'price-desc') {
+                // Sap xep theo gia: Cao den Thap
+                const priceA = parseInt(a.getAttribute('data-price'));
+                const priceB = parseInt(b.getAttribute('data-price'));
+                return priceB - priceA;
+            } else if (sortBy === 'name-asc') {
+                // Sap xep theo ten: A-Z (Su dung ten khong dau tu data-name)
+                const nameA = a.getAttribute('data-name').toUpperCase(); 
+                const nameB = b.getAttribute('data-name').toUpperCase();
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                return 0;
+            } else if (sortBy === 'default') {
+                // Giu nguyen thu tu ban dau
+                return 0; 
+            }
+            return 0;
+        });
+
+        // 3. Xoa cac san pham hien co va them lai theo thu tu da sap xep
+        products.forEach(product => {
+            grid.appendChild(product);
+        });
+    }
+</script>
+
+</body>
+</html>

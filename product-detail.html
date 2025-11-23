@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="detail-title">Chi Tiết Sản Phẩm | An Lạc Phong Thủy</title>
+    <style>
+        /* CSS Tùy chỉnh (Kết hợp CSS chung từ products-list.html và CSS riêng cho trang chi tiết) */
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #F8F4E3; /* Màu nền trắng kem, ấm áp */
+            color: #4B3832; /* Màu chữ nâu đất đậm */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* HEADER & NAVBAR (Giống products-list.html) */
+        .header {
+            background-color: #654321;
+            color: #FFD700;
+            padding: 10px 0;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            font-size: 1.5em; 
+            margin-right: 5px;
+            color: #FFD700;
+        }
+
+        .logo-text {
+            color: #F8F4E3;
+        }
+
+        .navbar a {
+            color: #F8F4E3;
+            text-decoration: none;
+            margin-left: 20px;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #8B4513;
+            border-radius: 4px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-actions a {
+            color: #FFD700; 
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            margin-left: 15px;
+            padding: 5px 10px;
+            border: 1px solid #FFD700;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .user-actions a:hover {
+            color: #654321;
+            background-color: #FFD700;
+        }
+
+        /* FOOTER (Giống products-list.html) */
+        .footer {
+            background-color: #4B3832;
+            color: #F8F4E3;
+            padding: 30px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            text-align: left;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        /* Nút chính */
+        .btn-main {
+            display: inline-block;
+            background-color: #FFD700;
+            color: #654321; 
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-main:hover {
+            background-color: #FFC000;
+        }
+
+        /* CSS RIÊNG CHO TRANG CHI TIẾT SẢN PHẨM */
+        .product-detail-section {
+            padding: 50px 0;
+        }
+        .detail-wrapper {
+            display: flex;
+            gap: 40px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #D2B48C;
+        }
+        .detail-image {
+            flex-shrink: 0;
+            width: 50%;
+        }
+        .detail-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+        .detail-info {
+            width: 50%;
+        }
+        .detail-info h1 {
+            color: #8B4513;
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+        .detail-price {
+            font-size: 1.5em;
+            color: #A0522D;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #F0EAD6;
+            padding-bottom: 15px;
+        }
+        .detail-description h3 {
+            text-align: left;
+            font-size: 1.2em;
+            color: #654321;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .detail-description p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        .quantity-control {
+            margin-bottom: 20px;
+        }
+        .quantity-control label {
+            font-weight: bold;
+            color: #4B3832;
+        }
+        .quantity-control input {
+            width: 60px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #D2B48C;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        #product-features {
+            list-style: disc;
+            margin-left: 20px;
+        }
+        #product-features li {
+            margin-bottom: 5px;
+        }
+        
+        /* Media Query cho Mobile */
+        @media (max-width: 768px) {
+            .detail-wrapper {
+                flex-direction: column;
+            }
+            .detail-image, .detail-info {
+                width: 100%;
+            }
+            .detail-info h1 {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">☯</span> 
+                <span class="logo-text">An Lạc Phong Thủy</span>
+            </div>
+            <nav class="navbar">
+                <a href="index.html">Trang Chủ</a>
+                <a href="products-list.html">Sản Phẩm</a>
+                <a href="index.html#about">Giới Thiệu</a>
+                <a href="#contact">Liên Hệ</a>
+            </nav>
+            <div class="user-actions">
+                <a href="cart.html" title="Giỏ Hàng">Giỏ Hàng</a> 
+                <a href="index.html#open-login-modal" title="Tài Khoản">Đăng Nhập</a> 
+            </div>
+        </div>
+    </header>
+    
+    <section class="product-detail-section">
+        <div class="container">
+            <div class="detail-wrapper">
+                <div class="detail-image">
+                    <img id="product-img" src="" alt="Hình ảnh sản phẩm">
+                </div>
+                <div class="detail-info">
+                    <h1 id="product-name">Tên Sản Phẩm</h1>
+                    <p class="detail-price" id="product-price">Giá: Đang cập nhật</p>
+                    
+                    <div class="quantity-control">
+                        <label for="quantity">Số lượng:</label>
+                        <input type="number" id="quantity" value="1" min="1">
+                    </div>
+
+                    <button class="btn-main">Thêm vào Giỏ Hàng</button>
+                    
+                    <div class="detail-description">
+                        <h3>Mô tả chi tiết</h3>
+                        <p id="product-description">Nội dung mô tả sẽ được tải từ dữ liệu sản phẩm.</p>
+                        
+                        <h3>Đặc điểm nổi bật</h3>
+                        <ul id="product-features">
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col contact-info">
+                <h4>Liên Hệ Chúng Tôi</h4>
+                <p><strong>Hotline:</strong> 0987 654 321</p>
+                <p><strong>Email:</strong> anlacphongthuy@email.com</p>
+                <p><strong>Địa chỉ:</strong> Số X, Đường Y, Quận Z, TP. HCM</p>
+                <p>Giờ làm việc: 9:00 - 18:00 (T2 - T7)</p>
+            </div>
+    
+            <div class="footer-col nav-links">
+                <h4>Danh Mục</h4>
+                <ul>
+                    <li><a href="vong-tay-phong-thuy.html">Vòng Tay Phong Thủy</a></li>
+                    <li><a href="da-quy-thach-anh.html">Đá Quý & Thạch Anh</a></li>
+                    <li><a href="tuong-linh-vat.html">Tượng & Linh Vật</a></li>
+                    <li><a href="tin-tuc-phong-thuy.html">Tin Tức Phong Thủy</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-col policies">
+                <h4>Chính Sách</h4>
+                <ul>
+                    <li><a href="#">Chính sách Đổi trả</a></li>
+                    <li><a href="#">Chính sách Bảo mật</a></li>
+                    <li><a href="#">Hướng dẫn Thanh toán</a></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 An Lạc Phong Thủy. Bảo lưu mọi quyền.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Dữ liệu của TẤT CẢ sản phẩm
+        const productData = {
+            "vong-thach-anh": {
+                name: "Vòng Tay Đá Thạch Anh",
+                price: "499.000 VNĐ",
+                img: "placeholder-1.jpg",
+                description: "Vòng tay được chế tác từ đá Thạch Anh tự nhiên 100%, giúp tăng cường năng lượng tích cực, xua đuổi tà khí và mang lại may mắn trong công việc. Vòng có màu sắc tự nhiên, bền đẹp theo thời gian.",
+                features: ["Đá Thạch Anh tím tự nhiên cao cấp", "Kích thước hạt 8mm, 10mm (tùy chọn)", "Hợp mệnh Hỏa, Thổ"],
+            },
+            "tuong-di-lac-go": {
+                name: "Tượng Phật Di Lặc Gỗ",
+                price: "1.200.000 VNĐ",
+                img: "placeholder-2.jpg",
+                description: "Tượng Phật Di Lặc được chạm khắc tinh xảo từ gỗ quý, biểu tượng cho sự vui vẻ, an lạc và tài lộc, thích hợp đặt trên bàn làm việc hoặc phòng khách để thu hút cát khí.",
+                features: ["Chất liệu gỗ Hương đỏ nguyên khối", "Cao 20cm, rộng 30cm", "Đã khai quang tại Chùa Phúc An"],
+            },
+            "ty-huu-dong": {
+                name: "Tỳ Hưu Đồng Hút Lộc",
+                price: "750.000 VNĐ",
+                img: "placeholder-3.jpg",
+                description: "Linh vật Tỳ Hưu bằng đồng nguyên chất, có tác dụng chiêu tài, giữ lộc và trấn trạch hiệu quả. Tỳ Hưu không có hậu môn nên chỉ hút vào mà không nhả ra.",
+                features: ["Chất liệu Đồng vàng nguyên khối", "Cao 10cm, Dài 15cm", "Cặp Tỳ Hưu (Đực - Cái)"],
+            },
+            "thoi-vang-phong-thuy": {
+                name: "Thỏi Vàng Phong Thủy",
+                price: "320.000 VNĐ",
+                img: "placeholder-4.jpg",
+                description: "Thỏi vàng phong thủy làm bằng hợp kim mạ vàng, thường được dùng để trưng bày tại két sắt hoặc bàn thờ Thần Tài, tượng trưng cho sự giàu sang phú quý.",
+                features: ["Chất liệu hợp kim mạ vàng 24K", "Kích thước nhỏ gọn, dễ trưng bày", "Mang ý nghĩa chiêu tài"],
+            },
+            "gay-nhu-y-ngoc": {
+                name: "Gậy Như Ý Bằng Ngọc",
+                price: "2.500.000 VNĐ",
+                img: "placeholder-5.jpg",
+                description: "Gậy Như Ý (Ruyi) chế tác từ ngọc bích tự nhiên, là biểu tượng của quyền lực, thăng tiến trong sự nghiệp và mong muốn mọi việc đều được như ý.",
+                features: ["Ngọc bích tự nhiên, chạm khắc thủ công", "Biểu tượng cho địa vị và quyền lực", "Khuyên dùng làm quà tặng cho lãnh đạo"],
+            },
+            "cau-thach-anh-hong": {
+                name: "Quả Cầu Thạch Anh Hồng",
+                price: "890.000 VNĐ",
+                img: "placeholder-6.jpg",
+                description: "Quả cầu Thạch Anh Hồng giúp tăng cường năng lượng tình yêu, sự hòa hợp trong gia đình và cải thiện các mối quan hệ xã hội. Mang lại cảm giác bình yên, thư giãn.",
+                features: ["Thạch Anh Hồng tự nhiên 100%", "Đường kính 8cm, năng lượng dương", "Hợp mệnh Hỏa, Thổ"],
+            },
+            "vong-dau-tam": {
+                name: "Vòng Tay Dâu Tằm May Mắn",
+                price: "150.000 VNĐ",
+                img: "placeholder-7.jpg",
+                description: "Vòng dâu tằm tự nhiên, có tác dụng trừ tà, kị gió và bảo vệ trẻ em, người lớn khỏi các năng lượng tiêu cực. Đặc biệt tốt cho trẻ sơ sinh và phụ nữ mang thai.",
+                features: ["Gỗ Dâu Tằm tự nhiên", "Thiết kế đơn giản, mộc mạc", "Tác dụng trừ tà khí"],
+            },
+            "meo-may-man": {
+                name: "Linh Vật Mèo May Mắn",
+                price: "450.000 VNĐ",
+                img: "placeholder-8.jpg",
+                description: "Mèo Thần Tài (Maneki Neko) vẫy tay mang đến may mắn, tài lộc và khách hàng cho gia chủ. Rất thích hợp đặt tại quầy thu ngân, cửa hàng hoặc văn phòng.",
+                features: ["Chất liệu gốm sứ cao cấp", "Có kèm đệm đỏ may mắn", "Biểu tượng chiêu tài, kinh doanh phát đạt"],
+            },
+            "binh-da-mat-ho": {
+                name: "Bình Đá Mắt Hổ Tự Nhiên",
+                price: "680.000 VNĐ",
+                img: "placeholder-9.jpg",
+                description: "Bình đá Mắt Hổ chứa đựng nguồn năng lượng mạnh mẽ, giúp gia chủ tăng sự tự tin, dũng cảm và tập trung. Màu vàng nâu ấm áp mang lại cảm giác an toàn.",
+                features: ["Đá Mắt Hổ tự nhiên, màu vàng nâu", "Chạm khắc hình bình hồ lô", "Năng lượng bảo vệ, trừ tà"],
+            },
+            "vong-tram-huong": {
+                name: "Vòng Tay Trầm Hương",
+                price: "1.500.000 VNĐ",
+                img: "placeholder-10.jpg",
+                description: "Vòng Trầm Hương tỏa hương thơm dịu nhẹ, giúp thư giãn tinh thần, giảm căng thẳng và thu hút vận may. Là vật phẩm phong thủy đẳng cấp và quý giá.",
+                features: ["Gỗ Trầm Hương tự nhiên", "Mùi hương thanh thoát, thư thái", "Mang lại bình an, tài lộc"],
+            },
+            "vong-da-mat-ho": {
+                name: "Vòng Tay Đá Mắt Hổ",
+                price: "420.000 VNĐ",
+                img: "placeholder-11.jpg",
+                description: "Vòng tay Đá Mắt Hổ là vật phẩm hộ thân, giúp người đeo mạnh mẽ, quyết đoán và bảo vệ khỏi những hiểm nguy, mang lại sự ổn định trong cuộc sống.",
+                features: ["Đá Mắt Hổ vàng nâu", "Hạt tròn 12mm, dành cho nam giới", "Tăng cường tự tin, dũng khí"],
+            },
+            "khoi-da-thanh-kim": {
+                name: "Khối Đá Thanh Kim Lapis Lazuli",
+                price: "1.500.000 VNĐ",
+                img: "placeholder-12.jpg",
+                description: "Đá Lapis Lazuli (Thanh Kim) mang màu xanh dương đậm của bầu trời, được cho là viên đá của trí tuệ và sự thật, giúp tăng khả năng giao tiếp và quyết đoán.",
+                features: ["Đá tự nhiên, nhập khẩu từ Afghanistan", "Hình dạng khối vuông 8x8cm", "Hợp mệnh Thủy, Mộc"],
+            }
+        };
+
+        // 2. Hàm lấy thông tin từ URL (Query String)
+        function getProductIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id'); // Lấy giá trị của tham số 'id'
+        }
+
+        // 3. Hàm hiển thị chi tiết sản phẩm
+        function loadProductDetail() {
+            const productId = getProductIdFromUrl();
+            const product = productData[productId];
+
+            if (product) {
+                // Cập nhật thông tin chi tiết
+                document.getElementById('detail-title').textContent = product.name + " | An Lạc Phong Thủy";
+                document.getElementById('product-name').textContent = product.name;
+                document.getElementById('product-price').textContent = product.price;
+                document.getElementById('product-img').src = product.img;
+                document.getElementById('product-img').alt = product.name;
+                document.getElementById('product-description').textContent = product.description;
+
+                // Cập nhật tính năng
+                const featuresList = document.getElementById('product-features');
+                featuresList.innerHTML = ''; // Xóa nội dung cũ
+                product.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.textContent = feature;
+                    featuresList.appendChild(li);
+                });
+            } else {
+                // Xử lý khi không tìm thấy sản phẩm
+                document.getElementById('product-name').textContent = "Không tìm thấy sản phẩm này.";
+                document.getElementById('product-description').textContent = "Vui lòng trở lại trang danh sách sản phẩm để chọn mua.";
+                document.getElementById('product-price').textContent = "Sản phẩm không tồn tại.";
+                // Ẩn các phần tử không cần thiết
+                document.getElementById('product-img').src = "placeholder-error.jpg"; // Thêm ảnh báo lỗi
+                document.getElementById('quantity').style.display = 'none';
+                document.querySelector('.btn-main').style.display = 'none';
+            }
+        }
+
+        // 4. Gọi hàm khi trang tải xong
+        document.addEventListener('DOMContentLoaded', loadProductDetail);
+    </script>
+</body>
+</html>

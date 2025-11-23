@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng - An Lạc Phong Thủy</title>
+    <style>
+        /* Dán TOÀN BỘ CSS CỦA BẠN VÀO ĐÂY (bao gồm cả phần Responsive, Modal, và Giỏ Hàng) */
+        /* styles.css */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #F8F4E3; /* Màu nền trắng kem, ấm áp */
+            color: #4B3832; /* Màu chữ nâu đất đậm */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        h2, h3 {
+            color: #8B4513; /* Màu nâu đất chính */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* --- HEADER và NAVBAR --- */
+        .header {
+            background-color: #654321; /* Nâu đậm cổ điển */
+            color: #FFD700; /* Vàng kim cho logo */
+            padding: 10px 0;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- Logo --- */
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            font-size: 1.5em; 
+            margin-right: 5px;
+            color: #FFD700; /* Vàng kim nổi bật */
+        }
+
+        .logo-text {
+            color: #F8F4E3; /* Trắng kem */
+        }
+
+        .navbar a {
+            color: #F8F4E3; /* Màu chữ trắng kem */
+            text-decoration: none;
+            margin-left: 20px;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #8B4513; /* Nâu đất khi hover */
+            border-radius: 4px;
+        }
+
+        /* --- User Actions (Giỏ hàng, Đăng nhập) --- */
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        /* ĐÃ ĐIỀU CHỈNH STYLE CHO CHỮ THAY VÌ ICON */
+        .user-actions a {
+            color: #FFD700; 
+            text-decoration: none;
+            font-size: 1em; /* Thay vì 1.5em */
+            font-weight: bold;
+            margin-left: 15px;
+            padding: 5px 10px;
+            border: 1px solid #FFD700; /* Thêm viền để nổi bật */
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .user-actions a:hover {
+            color: #654321;
+            background-color: #FFD700;
+        }
+
+        /* Nút chính */
+        .btn-main {
+            display: inline-block;
+            background-color: #FFD700; /* Vàng kim nổi bật */
+            color: #654321; /* Chữ nâu đậm */
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-main:hover {
+            background-color: #FFC000;
+        }
+
+        /* --- SẢN PHẨM --- */
+        .products {
+            padding: 40px 0;
+        }
+
+        /* KHỐI DANH MỤC SẢN PHẨM MỚI */
+        .product-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px auto 40px;
+            max-width: 1000px;
+        }
+
+        .category-item {
+            display: inline-block;
+            background-color: #D2B48C; /* Màu nền nâu nhạt */
+            color: #4B3832; /* Màu chữ nâu đất */
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95em;
+            border: 1px solid #A0522D;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-item:hover {
+            background-color: #A0522D; 
+            color: #F8F4E3;
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .product-card {
+            background-color: white;
+            border: 1px solid #D2B48C; /* Viền màu nâu nhạt */
+            width: 300px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px; /* Chiều cao cố định */
+            object-fit: cover; /* Cắt ảnh để vừa vặn */
+            margin-bottom: 10px;
+            border-radius: 5px; /* Bo góc nhẹ */
+        }
+
+        .product-card h4 {
+            color: #654321;
+            margin-bottom: 10px; 
+            text-align: center; 
+        }
+
+        .price {
+            color: #A0522D; /* Nâu đất cho giá */
+            font-weight: bold;
+            margin: 5px 0 10px;
+        }
+
+        /* Nút thêm vào giỏ hàng mới */
+        .btn-add-to-cart {
+            background-color: #8B4513;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #654321;
+        }
+
+        .btn-detail {
+            display: block;
+            background-color: #D2B48C; /* Nút nâu nhạt */
+            color: #4B3832;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-detail:hover {
+            background-color: #8B4513;
+            color: white;
+        }
+
+        .view-all {
+            text-align: center;
+            margin-top: 30px;
+        }
+        /* --- PHẦN GIỚI THIỆU (ABOUT-US) --- */
+        .about-us {
+            background-color: #F0EAD6; /* Màu nền be nhạt, ấm áp hơn */
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .about-us .section-title {
+            color: #A0522D; /* Nâu đất làm tiêu đề nổi bật */
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .about-block {
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            padding: 25px;
+            background-color: white;
+            border-left: 5px solid #8B4513; /* Điểm nhấn nâu đất */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-block h4 {
+            color: #654321; /* Nâu đậm */
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .block-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .block-content ul {
+            list-style: disc;
+            margin-left: 25px;
+            margin-bottom: 15px;
+            color: #4B3832;
+        }
+
+        .block-content ul li {
+            line-height: 1.6;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background-color: #4B3832; /* Màu nâu đất rất đậm */
+            color: #F8F4E3;
+            padding: 30px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Chia thành 3 cột */
+            gap: 30px;
+            padding-bottom: 30px;
+        }
+
+        .footer-col h4 {
+            color: #FFD700; /* Vàng kim cho tiêu đề cột */
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            text-align: left; /* Căn trái cho các cột */
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li a {
+            color: #F8F4E3;
+            text-decoration: none;
+            line-height: 2;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #FFD700; /* Vàng kim khi hover */
+        }
+
+        /* ĐÃ ĐIỀU CHỈNH STYLE CHO NÚT MẠNG XÃ HỘI BẰNG CHỮ */
+        .social-icons a {
+            color: #F8F4E3;
+            font-size: 1em; /* Thay vì 1.5em */
+            margin-right: 10px;
+            padding: 5px 8px;
+            text-decoration: none;
+            border: 1px solid #F8F4E3;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #4B3832;
+            background-color: #FFD700;
+            border-color: #FFD700;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #654321; /* Đường kẻ phân cách */
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.8em;
+        }
+
+        /* ==================================== */
+        /* === STYLES CHO MODAL ĐĂNG NHẬP/KÝ === */
+        /* ==================================== */
+
+        .modal {
+            display: none; /* Ẩn theo mặc định */
+            position: fixed;
+            z-index: 1000; /* Luôn nằm trên cùng */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7); /* Nền tối mờ */
+        }
+
+        .modal-content {
+            background-color: #F8F4E3; /* Nền trắng kem */
+            margin: 10% auto; /* Canh giữa dọc, margin trên 10% */
+            padding: 30px;
+            border: 1px solid #8B4513;
+            width: 90%; 
+            max-width: 450px; /* Chiều rộng tối đa */
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeIn 0.3s;
+        }
+
+        /* Nút đóng Modal */
+        .close-btn {
+            color: #4B3832;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #A0522D;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content h2 {
+            color: #654321;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .modal .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #4B3832;
+        }
+
+        .modal .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #D2B48C;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .modal .form-group input:focus {
+            border-color: #A0522D;
+            outline: none;
+            box-shadow: 0 0 5px rgba(160, 82, 45, 0.5);
+        }
+
+        .modal .switch-form {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .modal .switch-form a {
+            color: #A0522D;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .modal .switch-form a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* ==================================== */
+        /* === STYLES CHO GIỎ HÀNG & THANH TOÁN === */
+        /* ==================================== */
+
+        .cart-section, .checkout-section {
+            padding: 40px 0;
+        }
+
+        .cart-items-list, .checkout-summary, .checkout-form {
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #D2B48C;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details h4 {
+            text-align: left;
+            margin-bottom: 5px;
+            color: #654321;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #A0522D;
+        }
+
+        .item-quantity input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #D2B48C;
+            border-radius: 4px;
+        }
+
+        .item-remove {
+            color: #A0522D;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9em;
+        }
+
+        .cart-summary, .order-summary {
+            border-top: 2px solid #D2B48C;
+            padding-top: 15px;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total-row {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        .checkout-btn-area {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .checkout-btn-area .btn-main {
+            padding: 12px 30px;
+            font-size: 1.1em;
+        }
+
+        /* Checkout Form */
+        .checkout-form {
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .checkout-form h4 {
+            text-align: left;
+            margin-bottom: 20px;
+            color: #654321;
+            font-size: 1.5em;
+        }
+
+        .checkout-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #D2B48C;
+            border-radius: 4px;
+        }
+
+        /* --- Responsive --- */
+
+        /* Tablet & Mobile Lớn */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .navbar {
+                margin-top: 10px;
+            }
+            .navbar a {
+                margin: 0 5px;
+            }
+            .user-actions {
+                margin-top: 10px;
+            }
+            .user-actions a {
+                padding: 5px 8px; /* Điều chỉnh padding cho nút chữ */
+                margin: 0 5px;
+            }
+            .product-grid {
+                gap: 15px;
+            }
+            .product-card {
+                width: 45%; /* 2 cột trên di động lớn */
+            }
+            .about-block {
+                padding: 20px;
+                margin: 0 15px 30px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr; /* Chuyển thành 1 cột trên di động */
+                text-align: center;
+            }
+            .footer-col h4 {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .footer-col ul {
+                padding-left: 0;
+            }
+            .social-icons {
+                margin-top: 15px;
+            }
+            .cart-item {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+            .item-img {
+                margin: 0 auto 10px;
+            }
+            .item-details {
+                text-align: center;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            .item-quantity {
+                margin: 0 auto;
+            }
+            .item-remove {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
+        }
+
+        /* Mobile Nhỏ */
+        @media (max-width: 600px) {
+            /* Danh mục sản phẩm xếp dọc */
+            .product-categories {
+                flex-direction: column; 
+                align-items: stretch;
+                padding: 0 15px;
+            }
+            .category-item {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Mobile Rất Nhỏ */
+        @media (max-width: 480px) {
+            .product-card {
+                width: 100%; /* 1 cột trên di động rất nhỏ */
+            }
+            .header .logo {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <span class="logo-icon">☯</span> 
+            <span class="logo-text">An Lạc Phong Thủy</span>
+        </div>
+        <nav class="navbar">
+            <a href="index.html">Trang Chủ</a>
+            <a href="products-list.html">Sản Phẩm</a>
+            <a href="index.html#about">Giới Thiệu</a>
+            <a href="index.html#contact">Liên Hệ</a>
+        </nav>
+        <div class="user-actions">
+            <a href="cart.html" title="Giỏ Hàng" style="background-color: #FFD700; color: #654321;">Giỏ Hàng</a> 
+            <a href="index.html#open-login-modal" title="Tài Khoản">Đăng Nhập</a> 
+        </div>
+    </div>
+</header>
+
+<section class="cart-section">
+    <div class="container">
+        <h2>🛍️ Giỏ Hàng Của Bạn</h2>
+
+        <div class="cart-items-list">
+            <div class="cart-item">
+                <img src="placeholder-1.jpg" alt="Vòng Tay Đá Thạch Anh" class="item-img">
+                <div class="item-details">
+                    <h4>Vòng Tay Đá Thạch Anh</h4>
+                    <p class="item-price">499.000 VNĐ</p>
+                </div>
+                <div class="item-quantity">
+                    <label for="qty-1">SL:</label>
+                    <input type="number" id="qty-1" value="1" min="1">
+                </div>
+                <a href="#" class="item-remove">Xóa</a>
+            </div>
+
+            <div class="cart-item">
+                <img src="placeholder-3.jpg" alt="Tỳ Hưu Đồng Hút Lộc" class="item-img">
+                <div class="item-details">
+                    <h4>Tỳ Hưu Đồng Hút Lộc</h4>
+                    <p class="item-price">750.000 VNĐ</p>
+                </div>
+                <div class="item-quantity">
+                    <label for="qty-2">SL:</label>
+                    <input type="number" id="qty-2" value="2" min="1">
+                </div>
+                <a href="#" class="item-remove">Xóa</a>
+            </div>
+            
+            </div>
+        
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Tạm tính:</span>
+                <span>2.000.000 VNĐ</span>
+            </div>
+            <div class="summary-row">
+                <span>Phí vận chuyển:</span>
+                <span>25.000 VNĐ</span>
+            </div>
+            <div class="summary-row total-row">
+                <span>Thành tiền:</span>
+                <span>2.025.000 VNĐ</span>
+            </div>
+        </div>
+        
+        <div class="checkout-btn-area">
+            <a href="checkout.html" class="btn-main">Tiến Hành Thanh Toán</a>
+        </div>
+    </div>
+</section>
+
+<footer id="contact" class="footer">
+    <div class="container footer-grid">
+        <div class="footer-col contact-info">
+            <h4>Liên Hệ Chúng Tôi</h4>
+            <p><strong>Hotline:</strong> 0987 654 321</p>
+            <p><strong>Email:</strong> anlacphongthuy@email.com</p>
+            <p><strong>Địa chỉ:</strong> Số X, Đường Y, Quận Z, TP. HCM</p>
+            <p>Giờ làm việc: 9:00 - 18:00 (T2 - T7)</p>
+        </div>
+
+        <div class="footer-col nav-links">
+            <h4>Danh Mục</h4>
+            <ul>
+                <li><a href="products-list.html">Vòng Tay Phong Thủy</a></li>
+                <li><a href="products-list.html">Đá Quý & Thạch Anh</a></li>
+                <li><a href="products-list.html">Tượng & Linh Vật</a></li>
+                <li><a href="#">Tin Tức Phong Thủy</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col policies">
+            <h4>Chính Sách</h4>
+            <ul>
+                <li><a href="#">Chính sách Đổi trả</a></li>
+                <li><a href="#">Chính sách Bảo mật</a></li>
+                <li><a href="#">Hướng dẫn Thanh toán</a></li>
+            </ul>
+            <div class="social-icons">
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 An Lạc Phong Thủy. Bảo lưu mọi quyền.</p>
+    </div>
+</footer>
+
+</body>
+</html>
